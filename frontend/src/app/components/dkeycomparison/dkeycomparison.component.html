@@ -1,27 +1,38 @@
-<div class="container" style="margin-bottom: 120px;">
-  <h2 class="font-weight-bold m-lg-2 text-md-center mb-3 mt-5 rounded text-white "
-      style="width:28%;background-color: #009cd1;; text-align:left; ">D-Comparison</h2>
+<div class="container comp" >
+  <h2 class="font-weight-bold m-lg-2 text-md-center mb-3 mt-5 rounded text-white d-comp ">D-Comparison</h2>
   <div>
-    <h2 style="text-align: center; color: #009cd1;"><span style="font-weight:bold">E = mc²</span></h2>
+    <h2 class="mc"><span>E = mc²</span></h2>
   </div>
   <div *ngIf="participantFormGroup">
-    <form  class="col card p-3 mt-5 mb-5" [formGroup]="participantFormGroup" (ngSubmit)= "addParticipant()" >
+    <form class="col card p-3 mt-5 mb-5" [formGroup]="participantFormGroup" (ngSubmit)="addParticipant()">
       <div class="form-group mb-2">
         <legend>Participant:</legend>
         <label class="form-label" for="name"> Name:</label>
-        <input id="name" formControlName="name" placeholder="Enter Name"  type="text" class="form-control"/>
-        <small *ngIf="participantFormGroup.controls['name'].errors && participantFormGroup.controls['name'].touched" class="text-danger">
-          Name is required
-        </small>
+        <input id="name" formControlName="name" placeholder="Enter Name" type="text" class="form-control"/>
+        <small *ngIf="participantFormGroup.controls['name'].errors && participantFormGroup.controls['name'].touched"
+               class="text-danger">Name is required</small>
       </div>
-      <div class="form-group">
-        <label for="lastName">PID DCC:</label>
-        <input id="lastName" formControlName="pidDCC" placeholder="PID DCC"  type="text" class="form-control"/>
-        <small *ngIf="participantFormGroup.controls['pidDCC'].errors && participantFormGroup.controls['pidDCC'].touched" class="text-danger">PID DCC is required</small>
+      <div class="form-group mb-2" *ngIf="dccPidList$ | async as result" [ngSwitch]="result.dataState">
+        <label class="form-label" for="pidDCC">PID DCC:</label>
+        <input id="pidDCC" formControlName="pidDCC" class="form-control" type="text"
+               placeholder="Search or enter PID DCC" list="dccList">
+        <!--        name="search" [(ngModel)]="searchText"-->
+        <datalist id="dccList">
+          <option *ngFor="let dccPid of result.data">{{dccPid}}</option>
+        </datalist>
+        <small
+          *ngIf="participantFormGroup.controls['pidDCC'].errors && participantFormGroup.controls['pidDCC'].touched "
+          class="text-danger">PID DCC is required</small>
+      </div>
+      <!--      <div class="form-group">-->
+      <!--        <label for="pidDcc">PID DCC:</label>-->
+      <!--        <input id="pidDcc" formControlName="pidDCC" placeholder="PID DCC" type="text" class="form-control"/>-->
+      <!--        <small *ngIf="participantFormGroup.controls['pidDCC'].errors && participantFormGroup.controls['pidDCC'].touched"-->
+      <!--               class="text-danger">PID DCC is required</small>-->
 
-      </div>
       <div class="col text-center">
-        <button [disabled]="this.participantFormGroup.invalid" class="btn btn-primary mt-5 w-auto"  style="background-color:#009cd1; border-color:#009cd1;" type="submit" >ADD PARTICIPANT</button>
+        <button class="btn btn-primary mt-5 w-auto sub" [disabled]="this.participantFormGroup.invalid" type="submit">ADD PARTICIPANT
+        </button>
       </div>
     </form>
   </div>
@@ -51,7 +62,8 @@
                 <td>{{participant.name}}</td>
                 <td>{{participant.pidDCC}}</td>
                 <td>
-                  <button  style="background-color:#009cd1; border-color:#009cd1;" class="btn btn-danger"  (click)="onDeleteParticipant(participant)">
+                  <button style="background-color:#009cd1; border-color:#009cd1;" class="btn btn-danger"
+                          (click)="onDeleteParticipant(participant)">
                     <span class="fa fa-trash-o"></span>
                   </button>
                 </td>
@@ -65,69 +77,69 @@
   </div>
   <div>
     <div *ngIf="reportFormGroup">
-    <form  name="ReportForm"  [formGroup]="reportFormGroup"  class="col card p-3 mb-5"   (ngSubmit)= "addReport()" >
-      <div class="row " >
-        <div class="row mb-3 m-lg-3 ">
-          <legend>Report:</legend>
-          <label for="pidReport" class="col-1 col-form-label"><span
-            style="font-weight:bold">PID Report</span></label>
-          <div   class="col-sm-10 form-group " >
-            <input type="text" formControlName="pidReport"  id="pidReport" placeholder="CCM-K1" >
-            <small *ngIf="reportFormGroup.controls['pidReport'].errors && reportFormGroup.controls['pidReport'].touched" class="text-danger">pidReport is required</small>
-            <label for="destination" class=" col-form-label disabled"><span
-              style="font-weight:bold; margin:10px">Destination</span></label>
-            <input type="text" class="my-lg-2" id="destination" placeholder="filesystem" readonly/>
+      <form name="ReportForm" [formGroup]="reportFormGroup" class="col card p-3 mb-5" (ngSubmit)="addReport()">
+        <div class="row ">
+          <div class="row mb-3 m-lg-3 ">
+            <legend>Report:</legend>
+            <label for="pidReport" class="col-1 col-form-label"><span
+              style="font-weight:bold">PID Report</span></label>
+            <div class="col-sm-10 form-group ">
+              <input type="text" formControlName="pidReport" id="pidReport" placeholder="CCM-K1">
+              <small
+                *ngIf="reportFormGroup.controls['pidReport'].errors && reportFormGroup.controls['pidReport'].touched"
+                class="text-danger">pidReport is required</small>
+              <label for="destination" class=" col-form-label disabled"><span
+                style="font-weight:bold; margin:10px">Destination</span></label>
+              <input type="text" class="my-lg-2" id="destination" placeholder="filesystem" readonly/>
 
+            </div>
+          </div>
+          <div class="col text-center form-group">
+            <button [disabled]="this.reportFormGroup.invalid" style="background-color:#009cd1; border-color:#009cd1;"
+                    class="btn btn-danger" type="submit" (click)="onDownload()">
+              EVALUATE COMPARISON
+            </button>
           </div>
         </div>
-        <div class="col text-center form-group">
-          <button [disabled]="this.reportFormGroup.invalid" style="background-color:#009cd1; border-color:#009cd1;" class="btn btn-danger" type="submit" (click)="onDownload()"  >
-            EVALUATE COMPARISON
-          </button>
-        </div>
-      </div>
-    </form>
+      </form>
       <div class="col text-center form-group">
-        <a  style="background-color:#009cd1; border-color:#009cd1;" class="btn btn-danger" type="submit"   href="http://localhost:8084/swagger-ui/index.html#/" target="_blank"  >
+        <a style="background-color:#009cd1; border-color:#009cd1;" class="btn btn-danger" type="submit"
+           href="http://localhost:8084/swagger-ui/index.html#/" target="_blank">
           Swagger UI OpenAPI
         </a>
       </div>
-  </div>
+    </div>
 
 
+    <!--  <div>-->
+    <!--    <form  name="Reportform"  class="col card p-3 mb-5" [formGroup]="reportFormGroup" (ngSubmit)= "addReport()">-->
+    <!--      <div class="row">-->
+    <!--        <div class="row mb-3 m-lg-3">-->
+    <!--          <legend>Report:</legend>-->
+    <!--          <label for="pidReport" class="col-1 col-form-label"><span-->
+    <!--            style="font-weight:bold">PID Report</span></label>-->
+    <!--          <div class="col-sm-10">-->
+    <!--            <input type="text" id="pidReport" placeholder="CCM-KC1" formControlName="pidReport" >-->
+    <!--            <small *ngIf="reportFormGroup.controls['pidReport'].errors && reportFormGroup.controls['pidReport'].touched" class="text-danger">-->
+    <!--              PID Report is required-->
+    <!--            </small>-->
+    <!--            <label for="destination" class=" col-form-label disabled"><span-->
+    <!--              style="font-weight:bold; margin:10px">Destination</span></label>-->
+    <!--            <input type="text" class="my-lg-2" id="destination" placeholder="filesystem" readonly/>-->
+    <!--          </div>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--      <div class="col text-center">-->
+    <!--        <button [disabled]="this.reportFormGroup.invalid" class="btn btn-primary mt-5 w-auto" type="submit" >ADD PARTICIPANT</button>-->
+    <!--      </div>-->
+    <!--      <div class="col text-center">-->
+    <!--        <a href="https://www.ptb.de/si/dkcr/CCM-KC1.xml" target="_blank" onclick="document.forms['Reportform'].submit(); return true;" class="btn btn-primary mt-5 w-auto">EVALUATE COMPARISON</a>-->
+    <!--      </div>-->
+    <!--    </form>-->
+    <!--  </div>-->
 
-
-
-
-  <!--  <div>-->
-<!--    <form  name="Reportform"  class="col card p-3 mb-5" [formGroup]="reportFormGroup" (ngSubmit)= "addReport()">-->
-<!--      <div class="row">-->
-<!--        <div class="row mb-3 m-lg-3">-->
-<!--          <legend>Report:</legend>-->
-<!--          <label for="pidReport" class="col-1 col-form-label"><span-->
-<!--            style="font-weight:bold">PID Report</span></label>-->
-<!--          <div class="col-sm-10">-->
-<!--            <input type="text" id="pidReport" placeholder="CCM-KC1" formControlName="pidReport" >-->
-<!--            <small *ngIf="reportFormGroup.controls['pidReport'].errors && reportFormGroup.controls['pidReport'].touched" class="text-danger">-->
-<!--              PID Report is required-->
-<!--            </small>-->
-<!--            <label for="destination" class=" col-form-label disabled"><span-->
-<!--              style="font-weight:bold; margin:10px">Destination</span></label>-->
-<!--            <input type="text" class="my-lg-2" id="destination" placeholder="filesystem" readonly/>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div class="col text-center">-->
-<!--        <button [disabled]="this.reportFormGroup.invalid" class="btn btn-primary mt-5 w-auto" type="submit" >ADD PARTICIPANT</button>-->
-<!--      </div>-->
-      <!--      <div class="col text-center">-->
-      <!--        <a href="https://www.ptb.de/si/dkcr/CCM-KC1.xml" target="_blank" onclick="document.forms['Reportform'].submit(); return true;" class="btn btn-primary mt-5 w-auto">EVALUATE COMPARISON</a>-->
-      <!--      </div>-->
-<!--    </form>-->
-<!--  </div>-->
-
-  <div>
-  </div>
+    <div>
+    </div>
   </div>
 </div>
 

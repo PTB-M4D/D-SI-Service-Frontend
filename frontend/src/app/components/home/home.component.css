@@ -1,0 +1,12 @@
+.home{
+  background-color: #009CD1;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 100%;
+  margin-bottom: 30px
+}
+.welcome{
+  color: white;
+  margin-left: 30px;
+  text-align:center
+}

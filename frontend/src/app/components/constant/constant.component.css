@@ -1,0 +1,16 @@
+.const{
+  margin-bottom: 120px;
+}
+.d-const{
+  width:20%;
+  background-color:#009cd1;
+  text-align:left;
+}
+.search{
+  width:1200px;
+  text-align: start;
+}
+.swagger{
+  background-color:#009cd1;
+  border-color:#009cd1;
+}

@@ -1,0 +1,14 @@
+.dsiFoot{
+  bottom: 0;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  background-color: #009cd1;
+}
+.urlLeft{
+  float: left;
+}
+.urlRight{
+  float: right;
+}

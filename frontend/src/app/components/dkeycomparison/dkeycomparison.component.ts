@@ -11,6 +11,7 @@ import {catchError, map, Observable, of, startWith} from "rxjs";
 import {AppDataState, DataStateEnum} from "../../state/participant.state";
 import {Report} from "../../model/report.model";
 import {saveAs} from "file-saver";
+import {Dcc} from "../../model/Dcc.model";
 
 
 @Component({
@@ -22,20 +23,23 @@ export class DkeycomparisonComponent implements OnInit {
   title = 'dsi-Services';
 
   public participants$?: Observable<AppDataState<Participant[]>>;
+  public dccPidList$?: Observable<AppDataState<Dcc[]>>;
   participantFormGroup?: FormGroup;
   readonly DataStateEnum = DataStateEnum;
   public reports$?: Observable<AppDataState<Report>>;
   reportFormGroup?: FormGroup<any>;
-
+  searchText: any;
 
   constructor(private participantsService: ParticipantsService, private fb: FormBuilder) {
   }
 
   ngOnInit() {
     this.getParticipants();
+    this.getDccList();
     this.participantFormGroup = this.fb.group({
         name: ["", Validators.required],
-        pidDCC: ["", Validators.required]
+        pidDCC: ["", Validators.required],
+        // search: ["", Validators.required]
       }
     )
     this.getReports();
@@ -110,6 +114,14 @@ export class DkeycomparisonComponent implements OnInit {
       }
     );
     this.participantsService.getPidReport();
+  }
+
+  public getDccList(): void {
+    this.dccPidList$ = this.participantsService.getDccList().pipe(
+      map(data => ({dataState: DataStateEnum.LOADED, data: data})),
+      startWith({dataState: DataStateEnum.LOADING}),
+      catchError(err => of({dataState: DataStateEnum.ERROR, errorMessage: err.message}))
+    );
   }
 }
 

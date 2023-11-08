@@ -5,6 +5,7 @@ import {Participant} from "../model/participant.model";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {Report} from "../model/report.model";
+import {Dcc} from "../model/Dcc.model";
 
 
 @Injectable({
@@ -12,6 +13,7 @@ import {Report} from "../model/report.model";
 })
 export class ParticipantsService {
   private apiServerUrl=environment.apiClientBaseUrl;
+  private apiServerDCCUrl=environment.apiDCCUrl;
   constructor(private  http: HttpClient) { }
   public getParticipants():  Observable<Participant[]>{
     return this.http.get<Participant[]>(`${this.apiServerUrl}/client/participants`);
@@ -40,4 +42,8 @@ export class ParticipantsService {
       observe:'response', responseType:'blob'
     });
   }
+  public getDccList():Observable<Dcc[]>{
+    return this.http.get<Dcc[]>(`${this.apiServerDCCUrl}/dccPidList`);
+  }
+
 }

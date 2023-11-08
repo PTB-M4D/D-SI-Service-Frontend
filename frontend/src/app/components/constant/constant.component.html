@@ -1,11 +1,10 @@
-<div class="container " style="margin-bottom: 120px;">
-  <h2 class="font-weight-bold text-md-center mb-5 rounded text-white"
-      style="width:20%;background-color:#009cd1;text-align:left;">D-Constant </h2>
+<div class="container const ">
+  <h2 class="font-weight-bold text-md-center mb-5 rounded text-white d-const">D-Constant </h2>
   <!--  Search form-->
   <form>
     <div class="input-group">
       <label class="input-group-text ">Search</label>
-      <input class="bi-search  input-group-text bg-light" style="width:1200px;text-align: start;" type="text"
+      <input class="bi-search  input-group-text bg-light search"  type="text"
              placeholder="search constants " name="search" [(ngModel)]="searchText">
     </div>
   </form>
@@ -46,7 +45,7 @@
     </ng-container>
     <!--    Swagger-->
     <div class="col text-center form-group">
-      <a style="background-color:#009cd1; border-color:#009cd1;" class="btn btn-danger" type="submit"
+      <a  class="btn btn-danger swagger" type="submit"
          href="http://localhost:8082/swagger-ui/index.html#/" target="_blank">Swagger UI OpenAPI</a>
     </div>
   </div>

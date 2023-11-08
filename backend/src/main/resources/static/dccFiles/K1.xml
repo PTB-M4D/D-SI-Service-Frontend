@@ -12,7 +12,7 @@
             <dcc:countryCodeISO3166_1>JP</dcc:countryCodeISO3166_1>
             <dcc:usedLangCodeISO639_1>en</dcc:usedLangCodeISO639_1>
             <dcc:mandatoryLangCodeISO639_1>en</dcc:mandatoryLangCodeISO639_1>
-            <dcc:uniqueIdentifier>y56</dcc:uniqueIdentifier>
+            <dcc:uniqueIdentifier>lo</dcc:uniqueIdentifier>
             <dcc:identifications>
                 <dcc:identification>
                     <dcc:issuer>calibrationLaboratory</dcc:issuer>
@@ -46,7 +46,7 @@
         </dcc:items>
         <dcc:calibrationLaboratory>
             <dcc:contact>
-                <dcc:name>Physikalisch-Technische</dcc:name>
+                <dcc:name>Physikalisch-Technische </dcc:name>
                 <dcc:eMail>info@nmij.jp</dcc:eMail>
                 <dcc:location>
                     <dcc:city>Tokyo</dcc:city>
